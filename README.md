@@ -1,4 +1,3 @@
 # datacode
 ##This is my  repo datacode
-* it is fast and reliable 
-* it is absolutley open
+* se if the new branch could be different than the master
