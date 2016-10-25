@@ -10,9 +10,9 @@ The most important thing to understand about R is that functions are objects in 
 
 Scoping is the set of rules that govern how R looks up the value of a symbol. In the example below, scoping is the set of rules that R applies to go from the symbol x to its value 10:
 
-#x <- 10
-#x
-#> [1] 10
+x <- 10
+x
+> [1] 10
 
 Understanding scoping allows you to:
 
@@ -39,48 +39,48 @@ Name masking
 
 The following example illustrates the most basic principle of lexical scoping, and you should have no problem predicting the output.
 
-# f <- function() {
-#  x <- 1
-# y <- 2
-#  c(x, y)
-#}
-#f()
-#rm(f)
+ f <- function() {
+  x <- 1
+ y <- 2
+  c(x, y)
+}
+f()
+rm(f)
 
 If a name isn’t defined inside a function, R will look one level up.
 
-#x <- 2
-#g <- function() {
-#  y <- 1
-#  c(x, y)
-#}
-#g()
-#rm(x, g)
+x <- 2
+g <- function() {
+  y <- 1
+  c(x, y)
+}
+g()
+rm(x, g)
 
 The same rules apply if a function is defined inside another function: look inside the current function, then where that function was defined, and so on, all the way up to the global environment, and then on to other loaded packages. Run the following code in your head, then confirm the output by running the R code.
 
-#x <- 1
-#h <- function() {
-#  y <- 2
-#  i <- function() {
-#    z <- 3
-#    c(x, y, z)
-#  }
-#  i()
-#}
-#h()
-#rm(x, h)
+x <- 1
+h <- function() {
+  y <- 2
+  i <- function() {
+    z <- 3
+    c(x, y, z)
+  }
+  i()
+}
+h()
+rm(x, h)
 
 The same rules apply to closures, functions created by other functions. Closures will be described in more detail in functional programming; here we’ll just look at how they interact with scoping. The following function, j(), returns a function. What do you think this function will return when we call it? 
 
-#j <- function(x) {
-#  y <- 2
-#  function() {
-#    c(x, y)
-#  }
-#}
-#k <- j(1)
-#k()
-#rm(j, k)
+j <- function(x) {
+  y <- 2
+  function() {
+    c(x, y)
+  }
+}
+k <- j(1)
+k()
+rm(j, k)
 
 This seems a little magical (how does R know what the value of y is after the function has been called). It works because k preserves the environment in which it was defined and because the environment includes the value of y. Environments gives some pointers on how you can dive in and figure out what values are stored in the environment associated with each function.
